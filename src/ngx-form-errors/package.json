@@ -1,0 +1,13 @@
+{
+  "version": "1.0.0-alpha.0",
+  "description": "Boilerplate free, extensible and UI agnostic @angular/forms error presentation library",
+  "keywords": [
+    "angular",
+    "forms",
+    "validation",
+    "error"
+  ],
+  "libConfig": {
+    "inlineResources": true
+  }
+}

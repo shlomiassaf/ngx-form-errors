@@ -1,0 +1,68 @@
+<default-scoped-and-local-templates></default-scoped-and-local-templates>
+<small *ngxErrorDefaultTemplate="let item; maxError:1; order:['fieldMatchValidator']"
+     class="form-control-feedback">ERROR: {{item.message}}</small>
+
+<div class="container">
+    <h1>Advanced features</h1>
+
+    <h4>Global advanced features applied:</h4>
+    <ul>
+        <li>Create a Child NgxErrorsService</li>
+        <li>Attach a new default template (attached to child service)</li>
+        <li>Limit max errors to 1 on default service</li>
+        <li>Set the display order of errors</li>
+    </ul>
+    <form [formGroup]="userForm">
+        <small *ngxErrorDefaultTemplate="let item; maxError:1; order:['fieldMatchValidator']"
+               class="form-control-feedback">ERROR!!!: {{item.message}}</small>
+
+        <div class="form-group row" [class.has-danger]="userForm.get('name').invalid">
+            <label class="col-sm-2 form-control-label" for="name">Name</label>
+            <div class="col-sm-10">
+                <input type="text" id="name" class="form-control" formControlName="name" />
+                <div ngxErrors="name"></div>
+            </div>
+        </div>
+        <div class="row">
+            Default local template with no max errors.
+            Override the "required" error and display a custom tepmlate.
+        </div>
+        <div class="form-group row" [class.has-danger]="userForm.get('password').invalid">
+            <label class="col-sm-2 form-control-label" for="password">Password</label>
+            <div class="col-sm-10">
+                <input type="password" id="password" class="form-control" formControlName="password" />
+                <small ngxErrors="password">
+                    <div *ngxErrorDefaultLocalTemplate="let item; maxError: 9999; order:['fieldMatchValidator']"
+                         class="form-control-feedback">{{item.message}}</div>
+                    <small *ngxErrorOverride="'required'" style="color: darkgoldenrod">CHILLING!</small>
+                </small>
+            </div>
+        </div>
+        <div class="form-group row" [class.has-danger]="userForm.get('confirmPassword').invalid">
+            <label class="col-sm-2 form-control-label" for="confirmPassword">Confirm Password</label>
+            <div class="col-sm-10">
+                <input type="password" id="confirmPassword" class="form-control" formControlName="confirmPassword" />
+                <div ngxErrors="confirmPassword"></div>
+            </div>
+        </div>
+        <div class="form-group row" [class.has-danger]="userForm.get('email').invalid">
+            <label class="col-sm-2 form-control-label" for="email">Email</label>
+            <div class="col-sm-10">
+                <input type="email" id="email" class="form-control" formControlName="email" />
+                <div ngxErrors="email"></div>
+            </div>
+        </div>
+        <div class="form-group row" [class.has-danger]="userForm.get('role').invalid">
+            <label class="col-sm-2 form-control-label" for="role">Role</label>
+            <div class="col-sm-10">
+                <select id="role" class="form-control" formControlName="role">
+                    <option *ngFor="let role of userRoles" [value]="role">{{role}}</option>
+                </select>
+            </div>
+        </div>
+    </form>
+
+    Raw output from form.value:
+    <br />
+    <pre>{{ userForm.value | json }}</pre>
+</div>

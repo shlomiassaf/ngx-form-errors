@@ -1,0 +1,11 @@
+<div *ngxErrorDefaultTemplate="let item; renderIf: renderIf"
+     class="form-control-feedback">{{item.message}}</div>
+
+<nav>
+    <a [routerLink]=" ['./basic-form'] ">Basic Form</a>
+    <a [routerLink]=" ['./template-form'] ">Template Form</a>
+    <a [routerLink]=" ['./reactive-form'] ">Reactive Form</a>
+    <a [routerLink]=" ['./advanced-form'] ">Advanced Form</a>
+</nav>
+
+<router-outlet></router-outlet>
