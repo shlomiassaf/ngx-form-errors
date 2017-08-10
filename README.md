@@ -44,9 +44,9 @@ import { NgxFormErrorsModule, NgxErrorsService } from 'ngx-form-errors';
   /* bla bla yada yada */
 })
 export class AppModule {
-    constructor(ngxErrorsService: NgxErrorsService) {
-              ngxErrors.setDefaultMessage('required', 'This field is required');
-    }
+  constructor(ngxErrorsService: NgxErrorsService) {
+    ngxErrors.setDefaultMessage('required', 'This field is required');
+  }
 }
 ```
 
@@ -68,6 +68,9 @@ Material example:
 
 <!-- COMPONENT TEMPLATE HERE... -->
 ```
+
+This template contains the instructions for how to render an error.
+You can supply any template, the library does not care.
 
 **Now, in your forms set error components and attach them to controls:**
 
@@ -113,6 +116,28 @@ Reactive example with material design:
 > In material, the presence of `md-error` is important, it must exists next to the control.
 This is why `<md-error ngxErrors="name"></md-error>` is used, however the actual rendered errors
 are based on the template!
+
+## Advanced features:
+**Configuration:**
+Error templates comes with a declarative API to customise the behaviour.
+Things like maximum errors to display, the order of display, render predicate and more...
+These are all sugar helpers and can be done manually within your templates.
+Read more in the documentation...
+
+**Multiple error template:**
+Supplying one template is enough for most use cases.
+However, some scenarios requires custom templates.
+**ngx-form-errors** support multiple templates using hierarchy.
+
+A template can be set per:
+  - NgModule
+  - Component
+  - NgForm
+  - Error component content
+
+When the library looks up for a template to use, the closest template to the element is selected (bottom first in the list).
+The hierarchy is managed via DOM structure (Error component content & NgForm) and angular's DI for Component & NgModule.
+Read more in the documentation...
 
 ## Why
 Rendering `@angular/forms` errors is usually a simple task but one that
