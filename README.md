@@ -137,10 +137,10 @@ A template can be set per:
 
 When the library looks up for a template to use, the closest template to the element is selected (bottom first in the list).
 The hierarchy is managed via DOM structure (Error component content & NgForm) and angular's DI for Component & NgModule.
-Read more in the documentation...
+Read more in the documentation for `NgxErrorTemplateDirective`
 
 ## Examples:
-Take a look at the demo app where you can find [examples by featrure](https://github.com/shlomiassaf/ngx-form-errors/tree/master/src/demo/app/showcase/containers/by-feature), [Reactive Forms example](https://github.com/shlomiassaf/ngx-form-errors/tree/master/src/demo/app/showcase/containers/reactive-form) and a [Template Driven forms example](https://github.com/shlomiassaf/ngx-form-errors/tree/master/src/demo/app/showcase/containers/template-form)
+Take a look at the demo app where you can find <a href="https://github.com/shlomiassaf/ngx-form-errors/tree/master/src/demo/app/showcase/containers/by-feature" target="_blank">examples by feature</a>, <a href="https://github.com/shlomiassaf/ngx-form-errors/tree/master/src/demo/app/showcase/containers/reactive-form" target="_blank">Reactive Forms example</a> and a <a href="https://github.com/shlomiassaf/ngx-form-errors/tree/master/src/demo/app/showcase/containers/template-form" target="_blank">Template Driven forms example</a>
 
 ## Why
 Rendering `@angular/forms` errors is usually a simple task but one that
