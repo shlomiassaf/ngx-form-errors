@@ -139,6 +139,9 @@ When the library looks up for a template to use, the closest template to the ele
 The hierarchy is managed via DOM structure (Error component content & NgForm) and angular's DI for Component & NgModule.
 Read more in the documentation...
 
+## Examples:
+Take a look at the demo app where you can find [examples by featrures](https://github.com/shlomiassaf/ngx-form-errors/tree/master/src/demo/app/showcase/containers/by-feature), [Reactive Forms example](https://github.com/shlomiassaf/ngx-form-errors/tree/master/src/demo/app/showcase/containers/reactive-form) and a [Template Driven forms example](https://github.com/shlomiassaf/ngx-form-errors/tree/master/src/demo/app/showcase/containers/template-form)
+
 ## Why
 Rendering `@angular/forms` errors is usually a simple task but one that
 repeats itself over and over.
