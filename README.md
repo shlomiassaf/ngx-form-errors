@@ -17,7 +17,7 @@ npm install ngx-form-errors
 
 ## Quick start
 
-In your application root module definition add `NgxFormErrorsModule`:
+**In your application root module definition add `NgxFormErrorsModule`:**
 
 ```ts
 import { NgxFormErrorsModule } from 'ngx-form-errors';
@@ -35,25 +35,43 @@ import { NgxFormErrorsModule } from 'ngx-form-errors';
 export class AppModule { /* lots of code... */ }
 ```
 
-Create a global error template in the template of the application's root component:
+**You can also set default error messages:**
 
-#### Bootstrap example:
+```ts
+import { NgxFormErrorsModule, NgxErrorsService } from 'ngx-form-errors';
+
+@NgModule({
+  /* bla bla yada yada */
+})
+export class AppModule {
+    constructor(ngxErrorsService: NgxErrorsService) {
+              ngxErrors.setDefaultMessage('required', 'This field is required');
+    }
+}
+```
+
+> Default error messages are only used when error returns `true` instead of a string.
+An example is the built in `required` validator.
+
+**Create a global error template in the template of the application's root component:**
+
+Bootstrap example:
 ```html
 <div *ngxErrorTemplate="let item" class="form-control-feedback">{{item.message}}</div>
 
 <!-- COMPONENT TEMPLATE HERE... -->
 ```
 
-#### Material example:
+Material example:
 ```html
 <md-error *ngxErrorTemplate="let item">{{item.message}}</md-error>
 
 <!-- COMPONENT TEMPLATE HERE... -->
 ```
 
-Now, in your forms set error components and attach them to controls:
+**Now, in your forms set error components and attach them to controls:**
 
-#### Template Driven:
+Template Driven example:
 ```html
 <form #form="ngForm">
   <div class="form-group row" [class.has-danger]="form.control.get('name')?.invalid">
@@ -66,7 +84,7 @@ Now, in your forms set error components and attach them to controls:
 </form>
 ```
 
-#### Reactive:
+Reactive example:
 ```html
 <form [formGroup]="userForm">
   <div class="form-group row" [class.has-danger]="userForm.get('name').invalid">
@@ -79,7 +97,7 @@ Now, in your forms set error components and attach them to controls:
 </form>
 ```
 
-#### Reactive (material):
+Reactive example with material design:
 ```html
 <form [formGroup]="userForm">
   <div class="form-group row" [class.has-danger]="userForm.get('name').invalid">
