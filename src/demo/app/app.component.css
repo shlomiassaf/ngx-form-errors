@@ -6,3 +6,13 @@ html, body{
 a.active {
   background-color: gray;
 }
+
+nav {
+  margin: 0;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+main {
+  height: calc(100% - 60px);
+}

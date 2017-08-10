@@ -1,11 +1,12 @@
 {
-  "name": "angular-library-starter",
+  "name": "ngx-form-errors",
   "version": "1.0.0",
-  "description": "An Angular Library Starter kit.",
+  "description": "Boilerplate free, extensible and UI agnostic @angular/forms error presentation library",
   "keywords": [
     "angular",
-    "webpack",
-    "typescript"
+    "forms",
+    "validation",
+    "error"
   ],
   "author": "Shlomi Assaf <shlomiasafk@gmail.com>",
   "homepage": "https://github.com/shlomiassaf/angular-library-starter",
@@ -211,5 +212,8 @@
     "packages": [
       "ngx-form-errors"
     ]
+  },
+  "dependencies": {
+    "bootstrap": "4.0.0-alpha.6"
   }
 }

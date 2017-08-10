@@ -36,6 +36,10 @@ export class ShowcaseHomeComponent {
     component
   }));
 
+  constructor() {
+    this.selectedExample = this.examplesByFormsModule[0];
+  }
+
   renderIf(c: AbstractControl): boolean {
     return c.dirty;
   }

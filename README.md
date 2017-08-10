@@ -140,7 +140,7 @@ The hierarchy is managed via DOM structure (Error component content & NgForm) an
 Read more in the documentation...
 
 ## Examples:
-Take a look at the demo app where you can find [examples by featrures](https://github.com/shlomiassaf/ngx-form-errors/tree/master/src/demo/app/showcase/containers/by-feature), [Reactive Forms example](https://github.com/shlomiassaf/ngx-form-errors/tree/master/src/demo/app/showcase/containers/reactive-form) and a [Template Driven forms example](https://github.com/shlomiassaf/ngx-form-errors/tree/master/src/demo/app/showcase/containers/template-form)
+Take a look at the demo app where you can find [examples by featrure](https://github.com/shlomiassaf/ngx-form-errors/tree/master/src/demo/app/showcase/containers/by-feature), [Reactive Forms example](https://github.com/shlomiassaf/ngx-form-errors/tree/master/src/demo/app/showcase/containers/reactive-form) and a [Template Driven forms example](https://github.com/shlomiassaf/ngx-form-errors/tree/master/src/demo/app/showcase/containers/template-form)
 
 ## Why
 Rendering `@angular/forms` errors is usually a simple task but one that
