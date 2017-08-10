@@ -473,8 +473,9 @@ However, some scenarios requires custom templates.
 <p>When the library looks up for a template to use, the closest template to the element is selected (bottom first in the list).
 The hierarchy is managed via DOM structure (Error component content &amp; NgForm) and angular&#39;s DI for Component &amp; NgModule.
 Read more in the documentation for <code>NgxErrorTemplateDirective</code></p>
-<p>Using multiple error templates with complex hierarchy might get really complex.
-Try to avoid complex setups as they are hard to debug.</p>
+<h4 id="avoid-complex-configurations">Avoid complex configurations</h4>
+<p>Using multiple error templates with complex hierarchy might get really complex.</p>
+<p>Try to avoid complex setups as they are hard to debug.</p>
 <p>Here are some options:</p>
 <ul>
 <li>Use custom templates on the component and not through error template even if you repeat it once or twice.
