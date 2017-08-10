@@ -11,8 +11,7 @@ import {
   BasicFormComponent,
   ReactiveFormComponent,
   TemplateFormComponent,
-  AdvancedFormComponent,
-  DefaultScopedAndLocalTempalteComponent
+  BY_FEATURE_COMPONENTS
 } from './containers';
 
 import {
@@ -32,8 +31,7 @@ import { ROUTES } from './showcase.routes';
     EmailValidatorDirective,
     PasswordValidatorDirective,
     FieldMatchValidatorDirective,
-    AdvancedFormComponent,
-    DefaultScopedAndLocalTempalteComponent
+    ...BY_FEATURE_COMPONENTS
   ],
   imports: [
     CommonModule,
@@ -42,6 +40,12 @@ import { ROUTES } from './showcase.routes';
     MaterialModule,
     NgxFormErrorsModule,
     RouterModule.forChild(ROUTES)
+  ],
+  entryComponents: [
+    BasicFormComponent,
+    ReactiveFormComponent,
+    TemplateFormComponent,
+    ...BY_FEATURE_COMPONENTS
   ]
 })
 export class ShowcaseModule {

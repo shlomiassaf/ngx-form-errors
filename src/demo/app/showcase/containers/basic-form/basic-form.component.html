@@ -1,33 +1,25 @@
-<div class="container">
-    <h1>Basic Template Driven Form</h1>
-    <form #heroForm="ngForm">
-      <div class="form-group row" [class.has-danger]="heroForm.control.get('name')?.invalid">
-          <label class="col-sm-2 form-control-label" for="name">Name</label>
-          <div class="col-sm-10">
-              <input type="text" class="form-control" name="name" id="name" ngModel #name="ngModel" required>
-              <div ngxErrors="name"></div>
-          </div>
+<form #heroForm="ngForm">
+  <div class="form-group row" [class.has-danger]="heroForm.control.get('name')?.invalid">
+      <label class="col-sm-2 form-control-label" for="name">Name</label>
+      <div class="col-sm-10">
+          <input type="text" class="form-control" name="name" id="name" ngModel #name="ngModel" required>
+          <div ngxErrors="name"></div>
       </div>
-      <div class="form-group row" [class.has-danger]="heroForm.control.get('alterEgo')?.invalid">
-          <label class="col-sm-2 form-control-label" for="alterEgo">Alter Ego</label>
-          <div class="col-sm-10">
-              <input type="text" class="form-control" name="alterEgo" id="alterEgo" ngModel #alterEgo="ngModel" required>
-              <div ngxErrors="alterEgo"></div>
-          </div>
+  </div>
+  <div class="form-group row" [class.has-danger]="heroForm.control.get('alterEgo')?.invalid">
+      <label class="col-sm-2 form-control-label" for="alterEgo">Alter Ego</label>
+      <div class="col-sm-10">
+          <input type="text" class="form-control" name="alterEgo" id="alterEgo" ngModel #alterEgo="ngModel" required>
+          <div ngxErrors="alterEgo"></div>
       </div>
-      <div class="form-group row" [class.has-danger]="heroForm.control.get('power')?.invalid">
-          <label class="col-sm-2 form-control-label" for="power">Hero Power</label>
-          <div class="col-sm-10">
-              <select class="form-control" id="power" name="power" ngModel #power="ngModel" required>
-                  <option *ngFor="let p of powers" [value]="p">{{ p }}</option>
-              </select>
-              <div ngxErrors="power"></div>
-          </div>
+  </div>
+  <div class="form-group row" [class.has-danger]="heroForm.control.get('power')?.invalid">
+      <label class="col-sm-2 form-control-label" for="power">Hero Power</label>
+      <div class="col-sm-10">
+          <select class="form-control" id="power" name="power" ngModel #power="ngModel" required>
+              <option *ngFor="let p of powers" [value]="p">{{ p }}</option>
+          </select>
+          <div ngxErrors="power"></div>
       </div>
-    </form>
-
-    Raw output from form.value:
-    <br />
-    <pre>{{ heroForm.form.value | json }}</pre>
-
-</div>
+  </div>
+</form>

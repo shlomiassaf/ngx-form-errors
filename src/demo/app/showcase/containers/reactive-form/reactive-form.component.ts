@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Inject, forwardRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import * as validators from '../../validators';
 import { User, UserRoles } from '../../user';
+import { ShowcaseHomeComponent } from '../showcase-home/showcase-home.component';
 
 @Component({
   selector: 'reactive-driven-form',
@@ -14,7 +15,7 @@ export class ReactiveFormComponent {
 
   readonly userRoles = UserRoles;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, @Inject(forwardRef(() => ShowcaseHomeComponent)) parent: ShowcaseHomeComponent) {
     this.userForm = this.formBuilder.group({
       name:             [this.model.name, Validators.required],
       password:         [this.model.password, [Validators.required, validators.passwordValidator]],
@@ -25,6 +26,7 @@ export class ReactiveFormComponent {
       validator: validators.fieldMatchValidator(['password', 'confirmPassword'],
         'Password does not match')
     });
+    parent.currentForm = this.userForm;
   }
 
 }

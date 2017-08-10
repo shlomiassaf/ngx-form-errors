@@ -2,11 +2,8 @@ import {
   AfterContentInit,
   ChangeDetectionStrategy,
   Component,
-  ContentChild,
-  ContentChildren,
   Input,
   OnDestroy,
-  QueryList,
   ViewContainerRef
 } from '@angular/core';
 import { AbstractControl, ControlContainer } from '@angular/forms';
@@ -15,27 +12,92 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { NgxDisplayContext } from './models';
 import { NgxErrorsService } from './ngx-errors.service';
-import { NgxErrorDefaultLocalTemplate, NgxErrorOverride } from './ngx-error-defaults';
 
+/**
+ * A Component that render form errors for a form controller attached to it.
+ *
+ * The component is used as a directive on any renderable element (i.e. not on `ng-container`).
+ *
+ * ```html
+ * <input type="password" id="password" formControlName="password" />
+ * <div ngxErrors="password"></div>
+ * ```
+ *
+ * > -  The component is used as a placeholder and all errors are added as siblings to the component.
+ * This approach enables support for content projected error directive, e.g. material's `md-error`.
+ * > -  The actual rendered content is based on the scoped template and not on the component
+ *
+ *
+ */
 @Component({
   selector: '[ngxErrors]',
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NgxErrorsComponent implements OnDestroy, AfterContentInit {
+export class NgxErrorsComponent implements  OnDestroy, AfterContentInit {
 
+  /**
+   * A predicate that allows filtering out error message right before they are displayed.
+   * @param c
+   */
   @Input() set renderIf(value: (c: AbstractControl) => boolean) {
     this.context.renderIf = value;
   };
 
+  /**
+   * A list of error keys that defines the order of which errors appear.
+   *
+   * The list can be partial, following errors will display in the order they were added.
+   */
   @Input() set order(value: string[]) {
     this.context.order = value;
   };
 
+  /**
+   * Maximum number of errors to display
+   */
   @Input() set maxError(value: number) {
     this.context.maxError = value;
   };
 
+  /**
+   * A string or a control that is the source of errors for this component.
+   *
+   * When a string is used, a lookup is done on the first `ControlContainer` up the (DOM) tree.
+   * The `ControlContainer` is an `@angular/forms` abstract form control that acts as a container
+   * for other forms controls. It can be `NgForm` but can vary based on the forms module used.
+   * In a Template-Driven form it can be `NgModelGroup` (but most likely `NgForm`) and in a Reactive
+   * form it will usually be `FormGroup`.
+   *
+   * > Remember, the first container is the source.
+   *
+   * #### Reactive Form:
+   * The string `email` will be used to search for a control named `email` on the `FormGroup` **userForm**
+   *
+   * ```html
+   * <form [formGroup]="userForm">
+   *   <label class="col-sm-2 form-control-label" for="email">Email</label>
+   *   <div class="col-sm-10">
+   *     <input type="email" id="email" class="form-control" formControlName="email" />
+   *     <div ngxErrors="email"></div>
+   *   </div>
+   * </form>
+   * ```
+   *
+   * #### Template-Driven Form:
+   * The string `email` will be used to search for a control named `email` on the `NgForm`
+   * ```html
+   * <form #userForm="ngForm"
+   *   <label class="col-sm-2 form-control-label" for="email">Email</label>
+   *   <div class="col-sm-10">
+   *     <input type="text" id="email" class="form-control" name="email"
+   *     [(ngModel)]="model.email"
+   *     required validateEmail>
+   *     <div ngxErrors="email"></div>
+   *   </div>
+   * </form>
+   * ```
+   */
   @Input('ngxErrors') set ngxErrors(value: AbstractControl | string) {
     if (value !== this._ngxErrors) {
       this.destroy();
@@ -56,15 +118,17 @@ export class NgxErrorsComponent implements OnDestroy, AfterContentInit {
     }
   }
 
+  /**
+   * A list of error keys (e.g. "required") that will be excluded (i.e. will not render)
+   * This is a full-compare version of `renderIf` in {@link NgxErrorsComponent}
+   * @param value
+   */
   @Input() set exclude(value: string[]) {
     if (this._exclude !== value) {
       this._exclude = Array.isArray(value) ? value : [];
       this.update();
     }
   }
-
-  @ContentChild(NgxErrorDefaultLocalTemplate) localTemplate: NgxErrorDefaultLocalTemplate;
-  @ContentChildren(NgxErrorOverride) overrides: QueryList<NgxErrorOverride>;
 
   private _exclude: string[] = [];
   private _ngxErrors: AbstractControl;
@@ -81,11 +145,11 @@ export class NgxErrorsComponent implements OnDestroy, AfterContentInit {
 
     /*  Create the context.
         The context is determined by priority based on hierarchy, the order (high -> low):
-         - Local template defined as content (NgxErrorDefaultLocalTemplate)
-         - Default SCOPED template (NgxErrorDefaultTemplate defined within the ControlContainer)
+         - Local template defined as content
+         - Default SCOPED template (NgxErrorTemplate defined within the ControlContainer)
          - Global Default template
      */
-    const context = this.ngxErrorsService.getScope(this.control, this.localTemplate);
+    const context = this.ngxErrorsService.getContextStore(this, this.control).get();
 
     // Now copy values from the context to the local context, skipping values that already exists
     // on the local context.
@@ -99,13 +163,12 @@ export class NgxErrorsComponent implements OnDestroy, AfterContentInit {
       this.context.maxError = Number.POSITIVE_INFINITY;
     }
 
-    const s = this.overrides.changes.subscribe(() => this.update());
-    this.unsubscribe.push(s);
-
     setTimeout(() => this.update(), 16);
   }
 
+  /** @internal */
   ngOnDestroy(): void {
+    this.ngxErrorsService.removeScope(this);
     this.destroy();
   }
 
@@ -134,8 +197,10 @@ export class NgxErrorsComponent implements OnDestroy, AfterContentInit {
            Using this._ngxErrors.invalid will reflect the full error state.
            Explore supporting this feature.
          */
+        const contextStore = this.ngxErrorsService.getContextStore(this, this.control);
+
         const errors = this._ngxErrors.errors;
-        const overrids = this.overrides.toArray();
+        const overrids = contextStore.mergedKeys();
 
         const errorKeys = Object.keys(errors).filter(key => this._exclude.indexOf(key) === -1);
 
@@ -155,7 +220,8 @@ export class NgxErrorsComponent implements OnDestroy, AfterContentInit {
         }
 
         errorKeys.forEach(name => {
-            const template = overrids.find( o => o.name === name );
+            const template = overrids[name];
+
             const item = {
               name,
               message: errors[name] === true
@@ -164,7 +230,7 @@ export class NgxErrorsComponent implements OnDestroy, AfterContentInit {
             };
 
             this.vcr.createEmbeddedView(
-              template ? template.templateRef : this.context.template,
+              template ? template.template : this.context.template,
               { $implicit: item }
             );
           });

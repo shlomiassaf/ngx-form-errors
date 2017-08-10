@@ -45,7 +45,7 @@ module.exports = {
      */
     { rel: 'manifest', href: '/assets/manifest.json' },
 
-    { rel: 'stylesheet', href: '//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css' }
+    { rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css' }
   ],
   meta: [
     { name: 'msapplication-TileColor', content: '#00bcd4' },

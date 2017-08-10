@@ -1,22 +1,18 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { NgxErrorDefaultLocalTemplate, NgxErrorDefaultTemplate, NgxErrorOverride } from './ngx-error-defaults';
+import { NgxErrorTemplateDirective } from './ngx-error-defaults';
 import { NgxErrorsService } from './ngx-errors.service';
 import { NgxErrorsComponent } from './ngx-errors.component';
 
 @NgModule({
   declarations: [
-    NgxErrorDefaultLocalTemplate,
-    NgxErrorDefaultTemplate,
-    NgxErrorOverride,
+    NgxErrorTemplateDirective,
     NgxErrorsComponent
   ],
   imports: [ CommonModule ],
   exports: [
-    NgxErrorDefaultLocalTemplate,
-    NgxErrorDefaultTemplate,
-    NgxErrorOverride,
+    NgxErrorTemplateDirective,
     NgxErrorsComponent
   ]
 })

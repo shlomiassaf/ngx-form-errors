@@ -1,11 +1,33 @@
-<div *ngxErrorDefaultTemplate="let item; renderIf: renderIf"
+<div *ngxErrorTemplate="let item; renderIf: renderIf"
      class="form-control-feedback">{{item.message}}</div>
 
-<nav>
-    <a [routerLink]=" ['./basic-form'] ">Basic Form</a>
-    <a [routerLink]=" ['./template-form'] ">Template Form</a>
-    <a [routerLink]=" ['./reactive-form'] ">Reactive Form</a>
-    <a [routerLink]=" ['./advanced-form'] ">Advanced Form</a>
-</nav>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3">
+            <md-nav-list>
+                <h4 md-subheader>By forms module:</h4>
+                <md-list-item *ngFor="let example of examplesByFormsModule">
+                    <a md-line (click)="selectedExample = example">{{ example.name }}</a>
+                </md-list-item>
 
-<router-outlet></router-outlet>
+                <h4 md-subheader>By feature:</h4>
+                <md-list-item *ngFor="let example of examplesByFeature">
+                    <a md-line (click)="selectedExample = example">{{ example.name }}</a>
+                </md-list-item>
+            </md-nav-list>
+        </div>
+        <div class="col-sm-8 col-sm-offset-1">
+            <div class="container" *ngIf="selectedExample">
+                <h1>{{selectedExample.name}}</h1>
+                <ng-container *ngComponentOutlet="selectedExample.component"></ng-container>
+
+                <div *ngIf="currentForm">
+                    Raw output from form.value:
+                    <br />
+                    <pre>{{ currentForm.value | json }}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

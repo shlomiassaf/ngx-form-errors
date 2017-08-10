@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-sm-6">
+        <form [formGroup]="form">
+
+            <div *ngxErrorTemplate="let item; order: ['alwaysFail4', 'alwaysFail3', 'alwaysFail2', 'alwaysFail1']" class="form-control-feedback">
+                <small>{{item.message}}</small>
+            </div>
+
+            <div class="form-group row" [class.has-danger]="form.get('name').invalid">
+                <label class="col-sm-2 form-control-label" for="name">Name</label>
+                <div class="col-sm-10">
+                    <small>Order reversed (assigned on template definition)</small>
+                    <input type="text" id="name" class="form-control" formControlName="name" />
+                    <small ngxErrors="name"></small>
+                </div>
+            </div>
+            <div class="form-group row" [class.has-danger]="form.get('password').invalid">
+                <label class="col-sm-2 form-control-label" for="password">Password</label>
+                <div class="col-sm-10">
+                    <small>Order: "required", "Constant Error #2", ... remaining (assigned ad-hoc on ngxErrors component)</small>
+                    <input type="password" id="password" class="form-control" formControlName="password" />
+                    <small ngxErrors="password" [order]="['required', 'alwaysFail2']"></small>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
