@@ -139,6 +139,17 @@ When the library looks up for a template to use, the closest template to the ele
 The hierarchy is managed via DOM structure (Error component content & NgForm) and angular's DI for Component & NgModule.
 Read more in the documentation for `NgxErrorTemplateDirective`
 
+#### Avoid complex configurations
+Using multiple error templates with complex hierarchy might get really complex.
+
+Try to avoid complex setups as they are hard to debug.
+
+Here are some options:
+
+  - Use custom templates on the component and not through error template even if you repeat it once or twice.
+    When repetition has volume use a template.
+  - Use control flow within templates (ngIf, ngSwitch) so a template can handle more then 1 scenario.
+
 ## Examples:
 Take a look at the demo app where you can find <a href="https://github.com/shlomiassaf/ngx-form-errors/tree/master/src/demo/app/showcase/containers/by-feature" target="_blank">examples by feature</a>, <a href="https://github.com/shlomiassaf/ngx-form-errors/tree/master/src/demo/app/showcase/containers/reactive-form" target="_blank">Reactive Forms example</a> and a <a href="https://github.com/shlomiassaf/ngx-form-errors/tree/master/src/demo/app/showcase/containers/template-form" target="_blank">Template Driven forms example</a>
 
