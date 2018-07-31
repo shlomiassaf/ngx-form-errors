@@ -109,6 +109,9 @@ export class NgxErrorsComponent implements  OnDestroy, AfterContentInit {
           return;
         }
       }
+      else if (value instanceof AbstractControl) {
+        this._ngxErrors = value;
+      }
 
       if (this._ngxErrors) {
         const s = this._ngxErrors.statusChanges.subscribe( o => this.update() );
